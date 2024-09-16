@@ -29,7 +29,8 @@ flag_cast<- function(combined_data){
       bongoc$cast<- expandRows(flagdf, "count")$cast
       
       bongodepth <-  bongoc %>%  dplyr::group_by(consecutive,station, cast) %>%  dplyr::summarize(max(Profondeur)) %>% 
-        dplyr::group_by(consecutive, station) %>%  dplyr::summarize(meandepth=mean(`max(Profondeur)`))
+        dplyr::group_by(consecutive, station) %>%  dplyr::summarize(meandepth=mean(`max(Profondeur)`),
+                                                                    maxdepth=max(`max(Profondeur)`))
       
       
       ggplot(bongoc, aes(x=Chrono, y=Profondeur,color=as.factor(cast))) +geom_point()
