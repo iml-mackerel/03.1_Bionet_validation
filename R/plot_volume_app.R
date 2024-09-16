@@ -4,7 +4,7 @@ plot_volume<- function(dataset) {
     ui = fluidPage(
       fluidRow(style = "padding-bottom: 20px;",
                column(4, sliderInput(inputId='year', label='Year', min=2013, max=2023,value=2013)),
-               column(4, textInput('consecutive', 'Consecutive', "001")
+               column(4, selectInput('consecutive', 'Consecutive',1:100, "001")
                ),
                fluidRow(
                  plotOutput('Volume', height = "400px")
@@ -12,15 +12,28 @@ plot_volume<- function(dataset) {
       )
     ),
     
-    server = function(input, output){
+    server = function(input, output, session){
       
       # Combine the selected variables into a new data frame
-      selectedData <- reactive({
-        datasub<- subset(dataset , consecutive==input$consecutive)
-        datasub<- subset(datasub, year %in% input$year)
-      return(datasub)  
-       
+      selectedyear <- reactive({
+        datasub<- subset(dataset, year %in% input$year)
+        return(datasub)  
+        
       })
+      
+      observeEvent(input$year, {
+        uc<-  unique(selectedyear()[,"consecutive"])
+        
+        updateSelectInput(session, inputId="consecutive",choices=uc, selected = uc[1])
+        
+      })
+      
+      selectedData <- reactive({
+        datasub<- subset(selectedyear() , consecutive==input$consecutive)
+        return(datasub)  
+        
+      })
+      
       
       output$Volume <-  renderPlot({
         c<- ggplot(selectedData(), aes(x=depth, y=`%Volume`,fill=catZ))+geom_bar(stat="identity") + coord_flip()
