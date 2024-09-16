@@ -35,21 +35,21 @@ library(shiny)
  bongocgg_all<-  tibble()
  bongodepth_all<-   tibble()
  bongostats_all<-   tibble()
- #combined_data_all<-   tibble()
-years=c(2013, 2016:2019,2021:2023)
+bongocast_all<-   tibble()
+ years=c(2013, 2016:2019,2021:2023)
 for(y in years){
 load(paste0("Rdata/Bionet_data", y, ".Rdata"))
  bongocgg_all<-  bind_rows(bongocgg_all, bongocgg %>%  mutate(year=y))
  bongodepth_all<-  bind_rows(bongodepth_all, bongodepth %>%  mutate(year=y))
  bongostats_all<-  bind_rows(bongostats_all, bongostats %>%  mutate(year=y))
-# combined_data_all<-  bind_rows(combined_data_all, combined_data)
+bongocast_all <-  bind_rows(bongocast_all, bongocast %>%  mutate(year=y))
 }
 #utiliser combined data pour visualiser les cast.allbongs<- flag_cast(combined_data)
 #utiliser bongostats pour faire une table
 #utiliser bongo depth dans une autre fenêtre pour comparaer avec max depth
 
  
-plot_volume(dataset=bongocgg_all)
+plot_volume(dataset=list( bongostats_all,bongocgg_all, bongocast_all, bongodepth_all,))
 
 
 #get % volume par bin de 1m.

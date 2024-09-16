@@ -7,7 +7,9 @@ plot_volume<- function(dataset) {
                column(4, selectInput('consecutive', 'Consecutive',1:100, "001")
                ),
                fluidRow(
-                 plotOutput('Volume', height = "400px")
+                 plotOutput('Volume', height = "400px")),
+                 fluidRow(
+                plotOutput('Cast', height = "400px")
                )
       )
     ),
@@ -16,7 +18,7 @@ plot_volume<- function(dataset) {
       
       # Combine the selected variables into a new data frame
       selectedyear <- reactive({
-        datasub<- subset(dataset, year %in% input$year)
+        datasub<- subset(dataset[[2]], year %in% input$year)
         return(datasub)  
         
       })
@@ -40,6 +42,20 @@ plot_volume<- function(dataset) {
         
         print(c) 
       })
+      
+      selectedData2 <- reactive({
+        datasub<- dataset[[3]] %>%  filter(year == input$year, consecutive==input$consecutive)
+        return(datasub)  
+        
+      })
+      
+      output$Cast <-  renderPlot({
+        c<- ggplot(selectedData2(), aes(x=depth, y=depth,fill=cast))+geom_bar(stat="identity") + coord_flip()
+        
+        print(c) 
+      })
+      
+  
     },
     
     options = list(height =500)

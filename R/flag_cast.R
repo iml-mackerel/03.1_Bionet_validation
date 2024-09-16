@@ -8,6 +8,7 @@ flag_cast<- function(combined_data){
                                                                                                direction01=as.numeric(as.factor(direction)),
                                                                                                directiondetect=c(NA,diff(direction01))) %>%  dplyr::ungroup()
   
+  allcast <- tibble()
   allbongs <- tibble()
   depth_mean <-  tibble()
   for(i in unique(bongo$consecutive)){
@@ -52,8 +53,10 @@ flag_cast<- function(combined_data){
     depth_mean= bind_rows(depth_mean, bongodepth)
     
     allbongs<- bind_rows(allbongs, output)
+    allcast <- bind_rows(allcast, bongoc)
+    
     }
 
-  return(list(allbongs, depth_mean))
+  return(list(allbongs, depth_mean, allcast))
 }
 
