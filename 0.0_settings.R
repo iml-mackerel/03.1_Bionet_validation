@@ -4,7 +4,10 @@ cran.packages <- c("plyr",
                    "future",
                    "future.apply",
                    "tidyverse",
-                   "data.table"
+                   "data.table",
+                   "shiny",
+                   "knitr",
+                   "kableExtra"
                    )
 
 install.this <- cran.packages[!(cran.packages %in% utils::installed.packages()[,"Package"])]
