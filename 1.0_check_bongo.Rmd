@@ -35,7 +35,8 @@ wdlist= c(paste0(path,"/Relevé 2013/Données brutes Bionet/"),
            paste0(path,"/Relevé 2021/Bionet_corrigé/Bionet/"),
            paste0(path,"/Relevé 2022/IML-2022-024_juin/Bionet/"),
            paste0(path,"/Relevé 2023/IML2023-20_Juin/Bionet/"),
-         paste0(path,"/Relevé 2024/IML2024-12_juin/Bionet/"))
+         paste0(path,"/Relevé 2024/IML2024-12_juin/Bionet/"),
+         paste0(path, "/Relevé 2025/Bionet/"))
    
 ```    
 
